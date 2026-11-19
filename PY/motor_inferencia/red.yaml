@@ -1,0 +1,31 @@
+# Base de conocimiento: diagnóstico de red de un equipo del aula
+# Cada regla: SI todas las premisas ENTONCES la conclusión.
+
+reglas:
+  - id: R1
+    si: [sin_navegacion, ping_ip_externa_ok]
+    entonces: problema_dns
+  - id: R2
+    si: [problema_dns]
+    entonces: accion_revisar_config_dns
+  - id: R3
+    si: [sin_navegacion, ping_ip_externa_falla, ping_gateway_ok]
+    entonces: problema_salida_router
+  - id: R4
+    si: [problema_salida_router, otros_equipos_sin_red]
+    entonces: accion_avisar_coordinador_TIC
+  - id: R5
+    si: [ping_gateway_falla, sin_ip]
+    entonces: problema_dhcp_o_cable
+  - id: R6
+    si: [problema_dhcp_o_cable, led_red_apagado]
+    entonces: problema_cable
+  - id: R7
+    si: [problema_cable]
+    entonces: accion_revisar_cable
+  - id: R8
+    si: [problema_dhcp_o_cable, led_red_encendido]
+    entonces: problema_dhcp
+  - id: R9
+    si: [problema_dhcp]
+    entonces: accion_renovar_ip
